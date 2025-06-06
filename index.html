@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Para Meu Amor 💜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #3e1f47, #7d4982);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            padding: 50px 20px;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(30, 15, 47, 0.85);
+            /* roxo escuro quase preto */
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ffd1ec;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffeaf4;
+            margin-bottom: 20px;
+        }
+
+        #contador {
+            font-size: 1.1rem;
+            color: #ffccff;
+            margin: 20px 0;
+            display: none;
+        }
+
+        button {
+            background: #9c4dcc;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #bb66ff;
+            box-shadow: 0 0 15px #ffd1ec;
+        }
+
+        #mensagemSurpresa {
+            margin-top: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ffe6f5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        #mensagemSurpresa.show {
+            max-height: 5000px;
+        }
+
+        #verMaisBtn {
+            background: #ff99cc;
+            color: #360030;
+        }
+
+        #verMaisBtn:hover {
+            background: #ffaedb;
+        }
+
+        #textoLongo {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #ffccf9;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            white-space: pre-line;
+        }
+
+        #textoLongo.show {
+            max-height: 5000px;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-style: italic;
+            color: #ffd1ec;
+        }
+
+        audio {
+            margin-top: 25px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Corações flutuantes */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(45deg);
+            top: -20px;
+            animation: fall linear infinite;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .explosion-heart {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ff66aa;
+            transform: rotate(45deg);
+            pointer-events: none;
+            animation: explode 600ms ease-out forwards;
+        }
+
+        .explosion-heart:before,
+        .explosion-heart:after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ff66aa;
+            border-radius: 50%;
+        }
+
+        .explosion-heart:before {
+            top: -6px;
+            left: 0;
+        }
+
+        .explosion-heart:after {
+            left: 6px;
+            top: 0;
+        }
+
+        @keyframes explode {
+            to {
+                opacity: 0;
+                transform: translate(var(--dx), var(--dy)) rotate(45deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Feliz Dia dos Namorados!</h1>
+        <p class="subtitle">Para o homem mais incrível do mundo 💜</p>
+
+        <button id="surpresaBtn">Clique aqui</button>
+        <div id="contador">Tempo juntos: carregando...</div>
+
+        <div id="mensagemSurpresa">
+            <p>
+                Texto 1 (menor)
+            </p>
+            <p class="footer">Com todo meu carinho,<br> [Seu Nome]</p>
+
+            <button id="verMaisBtn">Ver mais</button>
+            <div id="textoLongo">
+                Texto 2 (maior)
+            </div>
+        </div>
+
+        <audio controls autoplay loop>
+            <source src="Sla/Adri/Velha-infância-‐-Feito-com-o-Clipchamp.mp3" type="audio/mp3" />
+            Seu navegador não suporta áudio.
+        </audio>
+    </div>
+
+    <script>
+        // Cria corações flutuantes
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const size = Math.random() * 20 + 10;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3200);
+        }
+        setInterval(createFallingHeart, 300);
+
+        // Contador sem anos
+        const dataInicio = new Date("2025-01-01T00:00:00");
+const contador = document.getElementById("contador");
+
+function atualizarContador() {
+  const agora = new Date();
+
+  let anos = agora.getFullYear() - dataInicio.getFullYear();
+  let meses = agora.getMonth() - dataInicio.getMonth();
+  let dias = agora.getDate() - dataInicio.getDate();
+
+  if (dias < 0) {
+    meses--;
+    const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
+    dias += ultimoMes.getDate();
+  }
+
+  if (meses < 0) {
+    anos--;
+    meses += 12;
+  }
+
+  const inicioComAjuste = new Date(
+    dataInicio.getFullYear() + anos,
+    dataInicio.getMonth() + meses,
+    dataInicio.getDate() + dias
+  );
+
+  const diff = agora - inicioComAjuste;
+  const horas = Math.floor(diff / (1000 * 60 * 60));
+  const minutos = Math.floor((diff / (1000 * 60)) % 60);
+  const segundos = Math.floor((diff / 1000) % 60);
+
+  const totalMeses = anos * 12 + meses;
+
+  contador.textContent = `Estamos juntos há ${totalMeses} meses, ${dias} dias, ${horas}h ${minutos}min ${segundos}s`;
+}
+
+setInterval(atualizarContador, 1000);
+
+
+        const btn = document.getElementById('surpresaBtn');
+        const mensagem = document.getElementById('mensagemSurpresa');
+
+        btn.addEventListener('click', () => {
+            const rect = btn.getBoundingClientRect();
+            const x0 = rect.left + rect.width / 2;
+            const y0 = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 30; i++) {
+                const h = document.createElement('div');
+                h.classList.add('explosion-heart');
+                const angle = Math.random() * 2 * Math.PI;
+                const radius = Math.random() * 80 + 30;
+                const dx = Math.cos(angle) * radius;
+                const dy = Math.sin(angle) * radius;
+                h.style.left = x0 + 'px';
+                h.style.top = y0 + 'px';
+                h.style.setProperty('--dx', `${dx}px`);
+                h.style.setProperty('--dy', `${dy}px`);
+                document.body.appendChild(h);
+                h.addEventListener('animationend', () => h.remove());
+            }
+
+            const isHidden = mensagem.classList.toggle('show');
+            contador.style.display = isHidden ? 'block' : 'none';
+            btn.textContent = isHidden ? 'Ocultar mensagem' : 'Clique aqui';
+        });
+
+        document.getElementById('verMaisBtn').addEventListener('click', () => {
+            const texto = document.getElementById('textoLongo');
+            texto.classList.toggle('show');
+        });
+    </script>
+</body>
+
+</html>

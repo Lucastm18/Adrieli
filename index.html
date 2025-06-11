@@ -268,9 +268,12 @@
 
             <button id="verMaisBtn">Ver mais</button>
             <div id="textoLongo">
-                Hoje é nosso primeiro dia dos namorados juntos e também nosso segundo mês de relacionamento, nesse tempo que estamos passando juntos vim me sentindo uma pessoa extremamente feliz e amada, você faz eu te amar a cada dia que se passa e espero que esse seja apenas o começo de muita história e amor entre nós dois. 
-Espero passar todos os dias ao seu lado e de nosso filho, podendo comemorar a cada ano que se passe ao seu lado. 
-Eu te amo mais que tudo meu amor, feliz dia dos namorados!
+                Hoje é nosso primeiro dia dos namorados juntos e também nosso segundo mês de relacionamento, nesse tempo
+                que estamos passando juntos vim me sentindo uma pessoa extremamente feliz e amada, você faz eu te amar a
+                cada dia que se passa e espero que esse seja apenas o começo de muita história e amor entre nós dois.
+                Espero passar todos os dias ao seu lado e de nosso filho, podendo comemorar a cada ano que se passe ao
+                seu lado.
+                Eu te amo mais que tudo meu amor, feliz dia dos namorados!
             </div>
         </div>
 
@@ -334,7 +337,7 @@ Eu te amo mais que tudo meu amor, feliz dia dos namorados!
             const minutos = Math.floor((diffRestante / (1000 * 60)) % 60);
             const segundos = Math.floor((diffRestante / 1000) % 60);
 
-            contador.textContent = `Estamos juntos há ${meses} meses, ${dias} dias, ${horas}h, ${minutos}min, ${segundos}s. 💜`;
+            contador.textContent = `Estamos juntos há ${meses} ${meses === 1 ? 'mês' : 'meses'}, ${dias} ${dias === 1 ? 'dia' : 'dias'}, ${horas} ${horas === 1 ? 'hora' : 'horas'}, ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'}, ${segundos} ${segundos === 1 ? 'segundo' : 'segundos'}. 💜`;
         }
 
         setInterval(atualizarContador, 1000);
@@ -369,10 +372,13 @@ Eu te amo mais que tudo meu amor, feliz dia dos namorados!
             btn.textContent = isHidden ? 'Ocultar mensagem' : 'Clique aqui';
         });
 
-        document.getElementById('verMaisBtn').addEventListener('click', () => {
+        const verMaisBtn = document.getElementById('verMaisBtn');
+        verMaisBtn.addEventListener('click', () => {
             const texto = document.getElementById('textoLongo');
-            texto.classList.toggle('show');
+            const isShown = texto.classList.toggle('show');
+            verMaisBtn.textContent = isShown ? 'Ver menos' : 'Ver mais';
         });
+
 
         // Carrossel de imagens
         const slides = document.querySelectorAll('#carousel .slide');

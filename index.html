@@ -40,14 +40,12 @@
             max-width: 600px;
             margin: auto;
             background: rgba(30, 15, 47, 0.85);
-            /* roxo escuro quase preto */
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-
 
         h1 {
             font-size: 2.5rem;
@@ -136,7 +134,6 @@
             border-radius: 10px;
         }
 
-        /* Corações flutuantes */
         .heart {
             position: absolute;
             width: 20px;
@@ -212,6 +209,43 @@
                 transform: translate(var(--dx), var(--dy)) rotate(45deg);
             }
         }
+
+        /* Novo: Carrossel de imagens */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            /* aumenta o tamanho */
+            height: auto;
+            aspect-ratio: 4 / 5;
+            /* define proporção da imagem */
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .carousel img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* centraliza */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            /* evita zoom */
+            object-position: center;
+            background-color: #1e0f2f;
+            opacity: 0;
+            transition: opacity 1s ease;
+            border-radius: 15px;
+            border-style: ridge;
+        }
+
+        .carousel img.active {
+            opacity: 1;
+            z-index: 1;
+        }
     </style>
 </head>
 
@@ -224,14 +258,19 @@
         <div id="contador">Tempo juntos: carregando...</div>
 
         <div id="mensagemSurpresa">
-            <p>
-                Texto 1 (menor)
-            </p>
-            <p class="footer">Com todo meu carinho,<br> [Seu Nome]</p>
+            <div id="carousel" class="carousel">
+                <img src="Adri 1.jpg" class="slide active" alt="Foto 1" />
+                <img src="Adri 2.jpg" class="slide" alt="Foto 2" />
+                <img src="Adri 3.jpg" class="slide" alt="Foto 3" />
+            </div>
+
+            <p class="footer">Com todo meu carinho,<br> Adrieli</p>
 
             <button id="verMaisBtn">Ver mais</button>
             <div id="textoLongo">
-                Texto 2 (maior)
+                Hoje é nosso primeiro dia dos namorados juntos e também nosso segundo mês de relacionamento, nesse tempo que estamos passando juntos vim me sentindo uma pessoa extremamente feliz e amada, você faz eu te amar a cada dia que se passa e espero que esse seja apenas o começo de muita história e amor entre nós dois. 
+Espero passar todos os dias ao seu lado e de nosso filho, podendo comemorar a cada ano que se passe ao seu lado. 
+Eu te amo mais que tudo meu amor, feliz dia dos namorados!
             </div>
         </div>
 
@@ -242,7 +281,7 @@
     </div>
 
     <script>
-        // Cria corações flutuantes
+        // Corações flutuantes
         function createFallingHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -257,45 +296,49 @@
         }
         setInterval(createFallingHeart, 300);
 
-        // Contador sem anos
-        const dataInicio = new Date("2025-01-01T00:00:00");
-const contador = document.getElementById("contador");
+        // Contador de tempo
+        const dataInicio = new Date("2025-04-12T17:00:00");
+        const contador = document.getElementById("contador");
 
-function atualizarContador() {
-  const agora = new Date();
+        function atualizarContador() {
+            const agora = new Date();
+            const diffTotal = agora - dataInicio;
 
-  let anos = agora.getFullYear() - dataInicio.getFullYear();
-  let meses = agora.getMonth() - dataInicio.getMonth();
-  let dias = agora.getDate() - dataInicio.getDate();
+            if (diffTotal < 0) {
+                contador.textContent = "Ainda não começamos 💜";
+                return;
+            }
 
-  if (dias < 0) {
-    meses--;
-    const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
-    dias += ultimoMes.getDate();
-  }
+            // Total de milissegundos desde o início
+            let dataTemp = new Date(dataInicio.getTime());
 
-  if (meses < 0) {
-    anos--;
-    meses += 12;
-  }
+            let meses = 0;
+            while (dataTemp < agora) {
+                let next = new Date(dataTemp);
+                next.setMonth(next.getMonth() + 1);
+                if (next <= agora) {
+                    dataTemp = next;
+                    meses++;
+                } else {
+                    break;
+                }
+            }
 
-  const inicioComAjuste = new Date(
-    dataInicio.getFullYear() + anos,
-    dataInicio.getMonth() + meses,
-    dataInicio.getDate() + dias
-  );
+            // Dias desde o último mês completo
+            let dias = Math.floor((agora - dataTemp) / (1000 * 60 * 60 * 24));
+            dataTemp.setDate(dataTemp.getDate() + dias);
 
-  const diff = agora - inicioComAjuste;
-  const horas = Math.floor(diff / (1000 * 60 * 60));
-  const minutos = Math.floor((diff / (1000 * 60)) % 60);
-  const segundos = Math.floor((diff / 1000) % 60);
+            // Horas, minutos, segundos
+            const diffRestante = agora - dataTemp;
+            const horas = Math.floor(diffRestante / (1000 * 60 * 60));
+            const minutos = Math.floor((diffRestante / (1000 * 60)) % 60);
+            const segundos = Math.floor((diffRestante / 1000) % 60);
 
-  const totalMeses = anos * 12 + meses;
+            contador.textContent = `Estamos juntos há ${meses} meses, ${dias} dias, ${horas}h, ${minutos}min, ${segundos}s. 💜`;
+        }
 
-  contador.textContent = `Estamos juntos há ${totalMeses} meses, ${dias} dias, ${horas}h ${minutos}min ${segundos}s`;
-}
+        setInterval(atualizarContador, 1000);
 
-setInterval(atualizarContador, 1000);
 
 
         const btn = document.getElementById('surpresaBtn');
@@ -330,6 +373,18 @@ setInterval(atualizarContador, 1000);
             const texto = document.getElementById('textoLongo');
             texto.classList.toggle('show');
         });
+
+        // Carrossel de imagens
+        const slides = document.querySelectorAll('#carousel .slide');
+        let currentSlide = 0;
+
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(showNextSlide, 3000);
     </script>
 </body>
 
